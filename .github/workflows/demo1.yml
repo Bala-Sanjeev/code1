@@ -1,0 +1,13 @@
+name: MyFirstWorkflow
+on: push
+
+jobs:
+    first_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Welcome message
+              run: echo "Git hub actions"
+            - name: List Files
+              run: ls
+            - name: Read file
+              run: catfile2.txt
