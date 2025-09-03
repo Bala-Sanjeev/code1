@@ -8,8 +8,8 @@ jobs:
             - name: Welcome message
               run: echo "Git hub actions"
             - name: List Files
-              run: ls
+              run: pwd && ls -alh
             - name: Read file
-              run: cat file2.txt
+              run: cat ../../file2.txt
             - name: execute script
               run: bash ../../hello.sh
