@@ -10,4 +10,6 @@ jobs:
             - name: List Files
               run: ls
             - name: Read file
-              run: catfile2.txt
+              run: cat file2.txt
+            - name: execute script
+              run: bash ../../hello.sh
