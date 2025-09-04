@@ -24,7 +24,7 @@ jobs:
       - name: Pause for 30 seconds
         run: sleep 30
       - name: upload dragon.txt
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dragon-artifact
           path: dragon.txt
@@ -32,6 +32,7 @@ jobs:
 
   test_job_2:
     runs-on: linuxrun11
+    needs: build_job_1
     steps:
       - name: Pause for 10 seconds
         run: sleep 10
