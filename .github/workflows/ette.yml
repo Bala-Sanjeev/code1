@@ -2,7 +2,7 @@ name: Generate ASCII Artwork
 on:
   push:
     branches:
-      -     
+      - main
 
 
 jobs:
@@ -23,6 +23,11 @@ jobs:
 
       - name: Pause for 30 seconds
         run: sleep 30
+      - name: upload dragon.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: dragon-artifact
+          path: dragon.txt
 
 
   test_job_2:
