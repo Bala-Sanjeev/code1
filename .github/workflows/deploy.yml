@@ -7,11 +7,10 @@ on:
 
 jobs:
   deploy:
+    timeout-minutes: 1
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run Docker container with timeout
-        run: |
-          timeout 300s docker run --rm my-image:latest
+      - name: step1
+        run: sleep 300s
+      - name: step2  
+        run: sleep 300s
