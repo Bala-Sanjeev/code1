@@ -1,22 +1,19 @@
-name: MyFirstWorkflow
-on: push
+name: Demo Matrix Workflow
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
-    first_job:
-        runs-on: linuxrun11
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v5
-            - name: Welcome message
-              run: |
-                echo "Git hub actions"
-                pwd && ls -alh
-                cat file2.txt
-                ./hello.sh
+  deploy:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-20.04, windows-latest]
+        image: [hello-world, alpine]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Echo Docker Details
+        run: docker info
 
-    second_job:
-        runs-on: linuxrun11
-        steps:
-            - name: Welcome message
-              run: echo "2nd Job"
 
+      - name: Run ${{ matrix.image }} on ${{ matrix.os }}
+        run: docker run ${{ matrix.image }}
