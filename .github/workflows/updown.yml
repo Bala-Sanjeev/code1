@@ -1,0 +1,49 @@
+name: UpDown Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-status:
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.set-status.outputs.status }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run status check
+        id: set-status
+        run: |
+          # Simulate a check (replace with your logic)
+          if [ -f "success.txt" ]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "status=failure" >> $GITHUB_OUTPUT
+          fi
+
+  trigger-success-workflow:
+    needs: check-status
+    if: needs.check-status.outputs.status == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Success Workflow
+        uses: peter-evans/workflow-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          workflow: success.yml
+
+  trigger-failure-workflow:
+    needs: check-status
+    if: needs.check-status.outputs.status == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Failure Workflow
+        uses: peter-evans/workflow-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          workflow: failure.yml
