@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print input
-        run: echo "Input value: ${{ inputs.example-input }}"
+        run: "echo \"Input value: ${{ inputs.example-input }}\""
