@@ -1,0 +1,30 @@
+name: Check GitHub Output
+
+on: push
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.set-output.outputs.test}}
+      output2: ${{ steps.set-output.outputs.test}}
+    steps:
+      - name: Set output1 value
+        id: step1
+        run: echo "result=Hello from job1" >> $GITHUB_OUTPUT
+      - name: Set output2 value
+        id: step2
+        run: echo "${{github.ref}}" >> $GITHUB_OUTPUT
+      - name: Set output3 value
+        id: step3
+        run: echo "result=Hello from job3" >> $GITHUB_OUTPUT  
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    steps:
+      - name: Show outputs
+        env:
+          JOB1_OUTPUT: ${{ needs.job1.outputs.output1 }}
+          JOB2_OUTPUT: ${{ needs.job1.outputs.output2 }}
+        run: echo "Job1 output is $JOB1_OUTPUT and Job2 output is $JOB2_OUTPUT"
